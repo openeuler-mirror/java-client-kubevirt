@@ -6,7 +6,7 @@
 Summary:	Kubevirt java client (%{name}) for oVirt
 Name:		java-client-kubevirt
 Version:	0.5.0
-Release:	1
+Release:	2
 License:	LGPLv2+
 URL:		http://www.ovirt.org
 Source:		http://resources.ovirt.org/pub/ovirt-master-snapshot/src/%{name}/%{name}-%{package_version}.tar.gz
@@ -28,7 +28,6 @@ BuildRequires:  maven-plugin-registry
 # All are provided by our fat jar
 Provides:	mvn(io.kubernetes:client-java) = 6.0.1
 Provides:	mvn(io.gsonfire:gson-fire) = 1.8.3
-Provides:	mvn(javax.annotation:javax.annotation-api) = 1.3.2
 
 %description
 java client kubevirt
@@ -64,5 +63,8 @@ export JAVA_HOME="%{_java_jdk_home}"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 30 2021 caodongxia <caodongxia@huawei.com> - 0.5.0-2
+- Remove useless provided
+
 * Tue Aug 17 2021 Python_Bot <Python_Bot@openeuler.org> - 0.5.0-1
 - Init package
