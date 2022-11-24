@@ -6,10 +6,13 @@
 Summary:	Kubevirt java client (%{name}) for oVirt
 Name:		java-client-kubevirt
 Version:	0.5.0
-Release:	2
+Release:	3
 License:	LGPLv2+
 URL:		http://www.ovirt.org
-Source:		http://resources.ovirt.org/pub/ovirt-master-snapshot/src/%{name}/%{name}-%{package_version}.tar.gz
+Source0:    http://resources.ovirt.org/pub/ovirt-master-snapshot/src/%{name}/%{name}-%{package_version}.tar.gz
+# Maven dependencies we use to speedup build on OBS.
+Source1:    client-java-api.tar.gz
+Source2:    client-java-proto.tar.gz
 Group:		Development/Libraries
 
 BuildArch:	noarch
@@ -42,6 +45,10 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{package_version}
 
+mkdir -p /home/abuild/.m2/repository/
+tar -zxvf %{SOURCE1} -C /home/abuild/.m2/repository/
+tar -zxvf %{SOURCE2} -C /home/abuild/.m2/repository/
+
 %build
 %configure MVN="xmvn"
 # this step is necessary to resolve mvn dependencies that are not available
@@ -63,6 +70,9 @@ export JAVA_HOME="%{_java_jdk_home}"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 24 2022 misaka00251 <liuxin@iscas.ac.cn> - 0.5.0-3
+- Fix build on OBS
+
 * Tue Nov 30 2021 caodongxia <caodongxia@huawei.com> - 0.5.0-2
 - Remove useless provided
 
